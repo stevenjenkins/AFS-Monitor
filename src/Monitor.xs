@@ -164,7 +164,7 @@ rxdebug_PortName(char *aname)
  */
 
 static void
-myPrintTheseStats(HV *RXSTATS, struct rx_stats *rxstats)
+myPrintTheseStats(HV *RXSTATS, struct rx_statistics *rxstats)
 {
    HV *PACKETS;
    HV *TYPE;
@@ -373,7 +373,7 @@ static char *fsOpNames[] = {
 };
 
 
-/* 
+/*
  * from src/afsmonitor/afsmon-output.c
  *    ("$Header: /afs/slac/g/scs/slur/Repository/AFSDebug/Debug/src/Monitor.xs,v 1.2 2006/07/05 22:25:10 alfw Exp $");
  */
@@ -7245,7 +7245,7 @@ afs_do_xstat_cm_test(args)
 	currCollIDP++;
     }
 
-    code = my_xstat_cm_Init(my_xstat_CM_Handler, numCMs, CMSktArray, 
+    code = my_xstat_cm_Init(my_xstat_CM_Handler, numCMs, CMSktArray,
                             numCollIDs, collIDP, buffer, RETVAL);
     if(code) {
        BSETCODE(code, buffer);
@@ -7388,7 +7388,7 @@ afs_do_xstat_fs_test(args)
 	currCollIDP++;
     }
 
-    code = my_xstat_fs_Init(my_xstat_FS_Handler, numFSs, FSSktArray, 
+    code = my_xstat_fs_Init(my_xstat_FS_Handler, numFSs, FSSktArray,
                             numCollIDs, collIDP, buffer, RETVAL);
     if(code) {
        BSETCODE(code, buffer);
@@ -7535,7 +7535,7 @@ afs_do_scout(args)
        curr_skt->sin_port   = htons(7000);       /* FileServer port */
        curr_skt++;
     }
-    code = my_fsprobe_Init(&fsprobe_Results, &fsprobe_ConnInfo, numservers, 
+    code = my_fsprobe_Init(&fsprobe_Results, &fsprobe_ConnInfo, numservers,
                            FSSktArray, RETVAL, scout_debugfd, buffer);
     if(code) {
       if(buffer == "") {
@@ -7548,7 +7548,7 @@ afs_do_scout(args)
       }
       XSRETURN_UNDEF;
     }
-    code = my_FS_Handler(fsprobe_Results, numservers, fsprobe_ConnInfo, 
+    code = my_FS_Handler(fsprobe_Results, numservers, fsprobe_ConnInfo,
                          scout_debugfd, RETVAL, buff2);
     if (code) {
       sprintf(buffer, "[%s] Handler routine returned error code %d. %s", rn, code, buff2);
@@ -8206,7 +8206,7 @@ afs_do_afsmonitor(args)
     if (config_filename) {
       if (numFS || numCM) {
         sprintf(buffer,"Cannot use config option with fshosts or cmhosts");
-        BSETCODE(170, buffer); 
+        BSETCODE(170, buffer);
         /* 170 is the exit code for this error in the original afsmonitor.c */
         XSRETURN_UNDEF;
       }
@@ -8214,7 +8214,7 @@ afs_do_afsmonitor(args)
     else {
       if (!numFS && !numCM) {
         sprintf(buffer,"Must specify either config or (fshosts and/or cmhosts) options");
-        BSETCODE(175, buffer); 
+        BSETCODE(175, buffer);
         /* 175 is the exit code for this error in the original afsmonitor.c */
         XSRETURN_UNDEF;
       }
@@ -8237,8 +8237,8 @@ afs_do_afsmonitor(args)
             thresh_host = (char *)SvPV(value, PL_na);
             he = GetHostByName(thresh_host);
             if(he == (struct hostent *) NULL) {
-              sprintf(buffer, 
-                      "Couldn't parse fsthresh flag; unable to resolve hostname %s\n", 
+              sprintf(buffer,
+                      "Couldn't parse fsthresh flag; unable to resolve hostname %s\n",
                       thresh_host);
               BSETCODE(-1, buffer);
               XSRETURN_UNDEF;
@@ -8253,7 +8253,7 @@ afs_do_afsmonitor(args)
             thresh_value = (char *) SvPV(value, PL_na);
           }
         }
-        sprintf(buffer, "thresh fs %s %s %s", 
+        sprintf(buffer, "thresh fs %s %s %s",
                 thresh_name, thresh_value, thresh_handler);
         if(!thresh_host) {
           code = my_parse_threshEntry(buffer, &global_fsThreshCount,
@@ -8275,8 +8275,8 @@ afs_do_afsmonitor(args)
             temp_host = temp_host->next;
           }
           if(found) {
-            code = my_parse_threshEntry(buffer, &global_fsThreshCount, 
-                                        &global_cmThreshCount, temp_host, 
+            code = my_parse_threshEntry(buffer, &global_fsThreshCount,
+                                        &global_cmThreshCount, temp_host,
                                         1, buff2);
             if(code) {
               sprintf(buffer, "Couldn't parse fsthresh entry. %s", buff2);
@@ -8285,8 +8285,8 @@ afs_do_afsmonitor(args)
             }
           }
           else {
-            sprintf(buffer, 
-                    "Couldn't parse fsthresh entry for host %s; host not found", 
+            sprintf(buffer,
+                    "Couldn't parse fsthresh entry for host %s; host not found",
                     thresh_host);
             BSETCODE(-1, buffer);
             XSRETURN_UNDEF;
@@ -8325,8 +8325,8 @@ afs_do_afsmonitor(args)
             thresh_host = (char *)SvPV(value, PL_na);
             he = GetHostByName(thresh_host);
             if(he == (struct hostent *) NULL) {
-              sprintf(buffer, 
-                      "Couldn't parse fsthresh flag; unable to resolve hostname %s\n", 
+              sprintf(buffer,
+                      "Couldn't parse fsthresh flag; unable to resolve hostname %s\n",
                       thresh_host);
               BSETCODE(-1, buffer);
               XSRETURN_UNDEF;
@@ -8371,8 +8371,8 @@ afs_do_afsmonitor(args)
             thresh_host = (char *)SvPV(value, PL_na);
             he = GetHostByName(thresh_host);
             if(he == (struct hostent *) NULL) {
-              sprintf(buffer, 
-                      "Couldn't parse cmthresh flag; unable to resolve hostname %s\n", 
+              sprintf(buffer,
+                      "Couldn't parse cmthresh flag; unable to resolve hostname %s\n",
                       thresh_host);
               BSETCODE(-1, buffer);
               XSRETURN_UNDEF;
@@ -8408,8 +8408,8 @@ afs_do_afsmonitor(args)
             temp_host = temp_host->next;
           }
           if(found) {
-            code = my_parse_threshEntry(buffer, &global_fsThreshCount, 
-                                        &global_cmThreshCount, temp_host, 
+            code = my_parse_threshEntry(buffer, &global_fsThreshCount,
+                                        &global_cmThreshCount, temp_host,
                                         2, buff2);
             if(code) {
               sprintf(buffer, "Couldn't parse cmthresh entry. %s", buff2);
@@ -8418,8 +8418,8 @@ afs_do_afsmonitor(args)
             }
           }
           else {
-            sprintf(buffer, 
-                    "Couldn't parse cmthresh entry for host %s; host not found", 
+            sprintf(buffer,
+                    "Couldn't parse cmthresh entry for host %s; host not found",
                     thresh_host);
             BSETCODE(-1, buffer);
             XSRETURN_UNDEF;
@@ -8458,8 +8458,8 @@ afs_do_afsmonitor(args)
             thresh_host = (char *)SvPV(value, PL_na);
             he = GetHostByName(thresh_host);
             if(he == (struct hostent *) NULL) {
-              sprintf(buffer, 
-                      "Couldn't parse cmthresh flag; unable to resolve hostname %s\n", 
+              sprintf(buffer,
+                      "Couldn't parse cmthresh flag; unable to resolve hostname %s\n",
                       thresh_host);
               BSETCODE(-1, buffer);
               XSRETURN_UNDEF;
@@ -8910,9 +8910,9 @@ afs_do_rxdebug(args)
         warn("WARNING: Server doesn't support retrieval of Rx statistics\n");
       }
       else {
-        struct rx_stats rxstats;
+        struct rx_statistics rxstats;
 
-        /* should gracefully handle the case where rx_stats grows */
+        /* should gracefully handle the case where rx_statistics grows */
         code = rx_GetServerStats(s, host, port, &rxstats, &supportedStatValues);
         if (code < 0) {
           sprintf(buffer, "rxstats call failed with code %d", code);
@@ -9009,21 +9009,21 @@ afs_do_rxdebug(args)
 
         if (withSecStats) {
           HV* SECSTATS = newHV();
-          hv_store(SECSTATS, "type", 4, 
+          hv_store(SECSTATS, "type", 4,
                    newSViv(tconn.secStats.type), 0);
-          hv_store(SECSTATS, "level", 5, 
+          hv_store(SECSTATS, "level", 5,
                    newSViv(tconn.secStats.level), 0);
-          hv_store(SECSTATS, "flags", 5, 
+          hv_store(SECSTATS, "flags", 5,
                    newSViv(tconn.secStats.flags), 0);
-          hv_store(SECSTATS, "expires", 7, 
+          hv_store(SECSTATS, "expires", 7,
                    newSViv(tconn.secStats.expires), 0);
-          hv_store(SECSTATS, "packetsReceived", 15, 
+          hv_store(SECSTATS, "packetsReceived", 15,
                    newSViv(tconn.secStats.packetsReceived), 0);
-          hv_store(SECSTATS, "packetsSent", 11, 
+          hv_store(SECSTATS, "packetsSent", 11,
                    newSViv(tconn.secStats.packetsSent), 0);
-          hv_store(SECSTATS, "bytesReceived", 13, 
+          hv_store(SECSTATS, "bytesReceived", 13,
                    newSViv(tconn.secStats.bytesReceived), 0);
-          hv_store(SECSTATS, "bytesSent", 9, 
+          hv_store(SECSTATS, "bytesSent", 9,
                    newSViv(tconn.secStats.bytesSent), 0);
           hv_store(TCONN, "secStats", 8, newRV_inc((SV*)(SECSTATS)), 0);
         }
@@ -9177,37 +9177,37 @@ constant(name, arg=0)
 	case 'F':
 		switch (name[2]) {
 		case 'S':
-		if (strEQ(name,"AFSCB_MAX_XSTAT_LONGS")) 
+		if (strEQ(name,"AFSCB_MAX_XSTAT_LONGS"))
                     sv_setiv(ST(0),AFSCB_MAX_XSTAT_LONGS);
-		else if (strEQ(name,"AFSCB_XSTATSCOLL_CALL_INFO")) 
+		else if (strEQ(name,"AFSCB_XSTATSCOLL_CALL_INFO"))
                     sv_setiv(ST(0),AFSCB_XSTATSCOLL_CALL_INFO);
-		else if (strEQ(name,"AFSCB_XSTATSCOLL_FULL_PERF_INFO")) 
+		else if (strEQ(name,"AFSCB_XSTATSCOLL_FULL_PERF_INFO"))
                     sv_setiv(ST(0),AFSCB_XSTATSCOLL_FULL_PERF_INFO);
-		else if (strEQ(name,"AFSCB_XSTATSCOLL_PERF_INFO")) 
+		else if (strEQ(name,"AFSCB_XSTATSCOLL_PERF_INFO"))
                     sv_setiv(ST(0),AFSCB_XSTATSCOLL_PERF_INFO);
-		else if (strEQ(name,"AFSCB_XSTAT_VERSION")) 
+		else if (strEQ(name,"AFSCB_XSTAT_VERSION"))
                     sv_setiv(ST(0),AFSCB_XSTAT_VERSION);
-		else if (strEQ(name,"AFSCONF_VOLUMEPORT")) 
+		else if (strEQ(name,"AFSCONF_VOLUMEPORT"))
                     sv_setiv(ST(0),AFSCONF_VOLUMEPORT);
-		else if (strEQ(name,"AFS_MAX_XSTAT_LONGS")) 
+		else if (strEQ(name,"AFS_MAX_XSTAT_LONGS"))
                     sv_setiv(ST(0),AFS_MAX_XSTAT_LONGS);
-		else if (strEQ(name,"AFS_STATS_NUM_CM_RPC_OPS")) 
+		else if (strEQ(name,"AFS_STATS_NUM_CM_RPC_OPS"))
                     sv_setiv(ST(0),AFS_STATS_NUM_CM_RPC_OPS);
-		else if (strEQ(name,"AFS_STATS_NUM_FS_RPC_OPS")) 
+		else if (strEQ(name,"AFS_STATS_NUM_FS_RPC_OPS"))
                     sv_setiv(ST(0),AFS_STATS_NUM_FS_RPC_OPS);
-		else if (strEQ(name,"AFS_STATS_NUM_FS_XFER_OPS")) 
+		else if (strEQ(name,"AFS_STATS_NUM_FS_XFER_OPS"))
                     sv_setiv(ST(0),AFS_STATS_NUM_FS_XFER_OPS);
-		else if (strEQ(name,"AFS_XSTATSCOLL_CALL_INFO")) 
+		else if (strEQ(name,"AFS_XSTATSCOLL_CALL_INFO"))
                     sv_setiv(ST(0),AFS_XSTATSCOLL_CALL_INFO);
 #ifndef NOAFS_XSTATSCOLL_CBSTATS
-		else if (strEQ(name,"AFS_XSTATSCOLL_CBSTATS")) 
+		else if (strEQ(name,"AFS_XSTATSCOLL_CBSTATS"))
                     sv_setiv(ST(0),AFS_XSTATSCOLL_CBSTATS);
 #endif
-		else if (strEQ(name,"AFS_XSTATSCOLL_FULL_PERF_INFO")) 
+		else if (strEQ(name,"AFS_XSTATSCOLL_FULL_PERF_INFO"))
                     sv_setiv(ST(0),AFS_XSTATSCOLL_FULL_PERF_INFO);
-		else if (strEQ(name,"AFS_XSTATSCOLL_PERF_INFO")) 
+		else if (strEQ(name,"AFS_XSTATSCOLL_PERF_INFO"))
                     sv_setiv(ST(0),AFS_XSTATSCOLL_PERF_INFO);
-		else if (strEQ(name,"AFS_XSTAT_VERSION")) 
+		else if (strEQ(name,"AFS_XSTAT_VERSION"))
                     sv_setiv(ST(0),AFS_XSTAT_VERSION);
 		else {
 		     ST(0) = ST(1) = &PL_sv_undef;
@@ -9236,7 +9236,7 @@ constant(name, arg=0)
 	case 'F':
 		switch (name[2]) {
 		case 'G':
-		if (strEQ(name,"CFG_STR_LEN")) 
+		if (strEQ(name,"CFG_STR_LEN"))
                     sv_setiv(ST(0),CFG_STR_LEN);
 		else {
 		     ST(0) = ST(1) = &PL_sv_undef;
@@ -9361,13 +9361,13 @@ constant(name, arg=0)
 	case 'U':
 		switch (name[2]) {
 		case 'M':
-		if (strEQ(name,"NUM_AFS_STATS_CMPERF_LONGS")) 
+		if (strEQ(name,"NUM_AFS_STATS_CMPERF_LONGS"))
                     sv_setiv(ST(0),NUM_AFS_STATS_CMPERF_LONGS);
-		else if (strEQ(name,"NUM_CM_STAT_ENTRIES")) 
+		else if (strEQ(name,"NUM_CM_STAT_ENTRIES"))
                     sv_setiv(ST(0),NUM_CM_STAT_ENTRIES);
-		else if (strEQ(name,"NUM_FS_STAT_ENTRIES")) 
+		else if (strEQ(name,"NUM_FS_STAT_ENTRIES"))
                     sv_setiv(ST(0),NUM_FS_STAT_ENTRIES);
-		else if (strEQ(name,"NUM_XSTAT_FS_AFS_PERFSTATS_LONGS")) 
+		else if (strEQ(name,"NUM_XSTAT_FS_AFS_PERFSTATS_LONGS"))
                     sv_setiv(ST(0),NUM_XSTAT_FS_AFS_PERFSTATS_LONGS);
 		else {
 		     ST(0) = ST(1) = &PL_sv_undef;
@@ -9434,7 +9434,7 @@ constant(name, arg=0)
 		}
 		break;
 		case '_':
-		if (strEQ(name,"RX_ADDRINUSE")) 
+		if (strEQ(name,"RX_ADDRINUSE"))
                     sv_setiv(ST(0),RX_ADDRINUSE);
 		else if (strEQ(name,"RX_CALL_CLEARED"))
                     sv_setiv(ST(0),RX_CALL_CLEARED);
