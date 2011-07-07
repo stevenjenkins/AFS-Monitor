@@ -1,4 +1,4 @@
-This is the README file for the Perl extension module AFS::Monitor (Version 0.3.2) 
+This is the README file for the Perl extension module AFS::Monitor (Version 0.3.3)
 
 
 DESCRIPTION
@@ -26,7 +26,7 @@ COMPATIBILITY
 AVAILABILITY
     The latest version of the AFS::Monitor module is currently available at
 
- http://www.slac.stanford.edu/~alfw/AFS-Monitor/
+ http://github.com/stevenjenkins/AFS-Monitor as well as CPAN.
 
 
 BUILDING & INSTALLING
@@ -34,11 +34,11 @@ BUILDING & INSTALLING
     should be straightforward. The AFS::Monitor module is distributed as a
     single gzipped tar archive file:
 
-            AFS-Monitor-0.3.2.tar.gz
+            AFS-Monitor-0.3.3.tar.gz
 
     Unpack the archive to create an AFS-Monitor installation directory:
 
-        tar zxvf AFS-Monitor-0.3.2.tar.gz
+        tar zxvf AFS-Monitor-0.3.3.tar.gz
 
     'cd' into that directory, make, test and install the modules. You
     have to specify the location of the AFS system libraries. While
@@ -46,7 +46,7 @@ BUILDING & INSTALLING
     location of the AFS system libraries.  If you want to avoid that
     query, you should specify the environment variable 'AFSPATH'
     before you start[1].  If your AFS system type is not yet known by
-    the make file, please follow the printed message.  
+    the make file, please follow the printed message.
 
     This is the sequence of commands to build the modules:
 
@@ -84,10 +84,10 @@ EXAMPLES
 
 BUGS
     Please send all bug reports and suggestions for improvements to
-    Alf Wachsmann <alfw@slac.stanford.edu>. When reporting
+    Steven Jenkins <steven.jenkins@gmail.com>. When reporting
     bugs/problems please include information about operating system
     version, perl version, AFS version, AFS::Monitor module version.
-    Comments and suggestions are always welcome.
+    Comments, suggestions and patches are always welcome.
 
 
 CREDITS
@@ -96,7 +96,8 @@ CREDITS
 
 COPYRIGHT AND DISCLAIMER
     Copyright 2004-2006 Alf Wachsmann <alfw@slac.stanford.edu> and
-                        Elizabeth Cassell <e_a_c@mailsnare.net>
+                        Elizabeth Cassell <e_a_c@mailsnare.net>.
+    Copyright 2011 Steven Jenkins <steven.jenkins@gmail.com>
     All rights reserved.
 
     Most of the explanations in the documentation are taken from the original
